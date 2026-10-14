@@ -1,0 +1,52 @@
+Kommando: df -h /
+admin@adminkea:~$ ansible all -i 'nodekea1@10.6.69.85,nodekea3@10.6.69.102' -m ansible.builtin.command -a "df -h /"
+[WARNING]: Host 'nodekea1@10.6.69.85' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+nodekea1@10.6.69.85 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv   14G  5.4G  7.2G  43% /
+[WARNING]: Host 'nodekea3@10.6.69.102' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+nodekea3@10.6.69.102 | CHANGED | rc=0 >>
+Filesystem                         Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv   14G  5.4G  7.2G  43% /
+
+
+
+Kommando : hostnamectl
+
+ansible all -i 'nodekea1@10.6.69.85,nodekea3@10.6.69.102' -m ansible.builtin.command -a 'hostnamectl'
+
+
+admin@adminkea:~$ ansible all -i 'nodekea1@10.6.69.85,nodekea3@10.6.69.102' -m ansible.builtin.command -a 'hostnamectl'
+[WARNING]: Host 'nodekea1@10.6.69.85' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+nodekea1@10.6.69.85 | CHANGED | rc=0 >>
+ Static hostname: nodekea1
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: 1326109761c04c4b9b9031325bd8cc93
+         Boot ID: d8f68003cdfa4b609eb5f471745ed83b
+  Virtualization: microsoft
+Operating System: Ubuntu 24.04.5 LTS
+          Kernel: Linux 6.8.0-146-generic
+    Architecture: x86-64
+ Hardware Vendor: Microsoft Corporation
+  Hardware Model: Virtual Machine
+Firmware Version: Hyper-V UEFI Release v4.1
+   Firmware Date: Thu 2020-12-03
+    Firmware Age: 5y 10month 1w 3d
+[WARNING]: Host 'nodekea3@10.6.69.102' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.21/reference_appendices/interpreter_discovery.html for more information.
+nodekea3@10.6.69.102 | CHANGED | rc=0 >>
+ Static hostname: nodekea3
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: 8b58754f14fc4dd89ee103c3c7dd0493
+         Boot ID: 8dccd4dc01004c21b41afe6012c0bd93
+  Virtualization: microsoft
+Operating System: Ubuntu 24.04.5 LTS
+          Kernel: Linux 6.8.0-146-generic
+    Architecture: x86-64
+ Hardware Vendor: Microsoft Corporation
+  Hardware Model: Virtual Machine
+Firmware Version: Hyper-V UEFI Release v4.1
+   Firmware Date: Thu 2020-12-03
+    Firmware Age: 5y 10month 1w 3d
+

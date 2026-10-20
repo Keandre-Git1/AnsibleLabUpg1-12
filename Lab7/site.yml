@@ -1,0 +1,19 @@
+  - name: Skapa systemanvandare
+    hosts: nodes
+    become: true
+    roles:
+      - common
+
+  - name: Installation apache + status
+    hosts: webservers
+    become: true
+    roles:
+      - webserver
+
+  - name: installation mariadb + skapar konto med losenord
+    hosts: dbservers
+    become: true
+    roles:
+      - db
+    vars_files:
+      - group_vars/all/vault.yml

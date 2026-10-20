@@ -1,0 +1,37 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for db
+      - name: sakerstall installation av mariadb
+        ansible.builtin.apt:
+          update_cache: true
+          name:
+          - mariadb-server
+          - mariadb-client
+          - galera-4
+
+
+      - name: Kontroll av att mariadb körs
+        ansible.builtin.service:
+          name: mariadb
+          state: started
+          enabled: true
+
+      - name: installera pythonmysql
+        ansible.builtin.apt:
+          name: python3-pymysql
+          state: present
+
+      - name: skapa db
+        ansible.mariadb.mariadb_db:
+          name: varandb
+          state: present
+          login_unix_socket: /var/run/mysqld/mysqld.sock
+
+      - name: skapa anvandare + tilldela rättigheter
+        ansible.mariadb.mariadb_user:
+          name: admintest
+          password: "{{ vault_db_passwd }}"
+          priv: "varandb.*:ALL"
+          host: "localhost"
+          login_unix_socket: /var/run/mysqld/mysqld.sock
+

@@ -23,6 +23,10 @@
     become: true
     gather_facts: true
     tasks:
+      - name: Gather package facts
+        ansible.builtin.package_facts:
+          manager: auto
+
       - name: Samla in data från noder
         ansible.builtin.template:
           src: templates/gatherindex.html.j2

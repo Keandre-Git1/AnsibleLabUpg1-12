@@ -1,0 +1,30 @@
+  - name: Skapa systemanvandare
+    hosts: nodes
+    become: true
+    roles:
+      - common
+
+  - name: Installation apache + status
+    hosts: webservers
+    become: true
+    roles:
+      - webserver
+
+  - name: installation mariadb + skapar konto med losenord
+    hosts: dbservers
+    become: true
+    roles:
+      - db
+    vars_files:
+      - group_vars/all/vault.yml
+
+  - name: Samla in data från noder
+    hosts: nodes
+    become: true
+    gather_facts: true
+    tasks:
+      - name: Samla in data från noder
+        ansible.builtin.template:
+          src: templates/gatherindex.html.j2
+          dest: "/home/admin/{{ ansible_facts['hostname'] }}_inventory_report.md"
+        delegate_to: localhost

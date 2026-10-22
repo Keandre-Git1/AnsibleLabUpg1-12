@@ -1,0 +1,3 @@
+Mitt namn : {{ ansible_facts['hostname'] }}
+Min IP-Address : {{ ansible_facts['default_ipv4']['address'] }}
+Operativtyp :  {{ ansible_facts['os_family'], ansible_facts['distribution'], ansible_facts['distribution_version'] }}

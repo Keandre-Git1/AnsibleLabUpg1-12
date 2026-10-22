@@ -1,0 +1,10 @@
+# Serverdetaljer för {{ ansible_facts['hostname'] }}
+
+* **Hostname:** {{ ansible_facts['hostname'] }}
+* **CPU:** {{ ansible_facts['processor_vcpus'] }} kärnor
+* **RAM Totalt:** {{ ansible_facts['memtotal_mb'] }} MB
+* **RAM Ledigt:** {{ ansible_facts['memfree_mb'] }} MB
+* **Operativsystem:** {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}
+
+
+

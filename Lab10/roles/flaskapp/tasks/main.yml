@@ -1,0 +1,53 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for flaskapp
+- name: Installera paket
+  ansible.builtin.apt:
+    name: [nginx, gunicorn, python3-flask, python3-pymysql]
+    update_cache: true
+
+- name: Flask-app som läser databasen
+  ansible.builtin.copy:
+    dest: /opt/app.py
+    group: www-data
+    mode: '0640'
+    content: |
+      from flask import Flask, jsonify
+      import pymysql
+      app = Flask(__name__)
+
+      @app.route("/")
+      def index():
+          with pymysql.connect(host= "10.6.69.102", user="admintest",
+                               password={{ vault_db_passwd | tojson }}, database="varandb") as db:
+              with db.cursor() as c:
+                  c.execute("SELECT * FROM produkter")
+                  return jsonify(c.fetchall())
+  notify: Starta om Gunicorn
+
+- name: Gunicorn som systemd-service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/gunicorn.service
+    content: |
+      [Service]
+      User=www-data
+      WorkingDirectory=/opt
+      ExecStart=/usr/bin/gunicorn -b 127.0.0.1:8000 app:app
+      [Install]
+      WantedBy=multi-user.target
+  notify: Starta om Gunicorn
+
+- name: Nginx som reverse proxy
+  ansible.builtin.copy:
+    dest: /etc/nginx/sites-enabled/default
+    content: |
+      server { listen 80; location / { proxy_pass http://127.0.0.1:8000; } }
+  notify: Ladda om Nginx
+
+- name: Starta tjänsterna
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    daemon_reload: true
+  loop: [gunicorn, nginx]

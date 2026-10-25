@@ -31,7 +31,7 @@ Handlers startar bara om tjänsterna när deras konfiguration ändras.
 ## Körning
 
 ```bash
-ansible-playbook -i inventory site.yml --ask-vault-pass
+ansible-playbook -i Scripts/scripts.py site.yml -K
 ```
 
 ## Verifiering
@@ -43,9 +43,9 @@ systemctl status gunicorn nginx   # nodekea2
 systemctl status mariadb          # nodekea3
 ```
 
-![Nginx-status på nodekea2](Lab10nginxstat.png)
+![Nginx-status på nodekea2](Lab10nginxstat.PNG)
 
-![MariaDB-status på nodekea3](Lab10mariadbstat.png)
+![MariaDB-status på nodekea3](Lab10mariadbstat.PNG)
 
 **2. Appen svarar via Nginx**
 
@@ -54,7 +54,7 @@ curl http://10.6.69.83/
 # [[1,"Kaffe","29.50"]]
 ```
 
-![Svar från Nginx](Lab10svarfrnginx.png)
+![Svar från Nginx](Lab10svarfrnginx.PNG)
 
 **3. Datan kommer från databasen**
 
@@ -63,8 +63,8 @@ sudo mysql varandb -e "INSERT INTO produkter (namn, pris) VALUES ('Te', 19.00);"
 curl http://10.6.69.83/                                                          # Te syns nu
 ```
 
-![Nytt värde läggs in i databasen](Lab10Insertnyvärde.png)
+![Nytt värde läggs in i databasen](Lab10Insertnyvärde.PNG)
 
-![Det nya värdet syns i svaret](Lab10kontrollnyvärde.png)
+![Det nya värdet syns i svaret](Lab10kontrollnyvärde.PNG)
 
 Den nya raden syns utan omstart, vilket visar att appen hämtar live-data från MariaDB.

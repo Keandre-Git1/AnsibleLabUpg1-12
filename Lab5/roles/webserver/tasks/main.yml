@@ -1,0 +1,15 @@
+      - name: sakerstall installation av apache
+        ansible.builtin.apt:
+          update_cache: true      
+          name: apache2
+
+      - name: sakerstall att apache ar på
+        ansible.builtin.service:
+          name: apache2
+          state: started
+        notify: starta om apache
+
+
+
+
+

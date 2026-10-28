@@ -1,0 +1,12 @@
+  - name: Skapa systemanvandare
+    hosts: nodes
+    become: true
+    roles:
+      - common
+
+  - name: Installation apache + status
+    hosts: webservers
+    become: true
+    roles:
+      - webserver
+

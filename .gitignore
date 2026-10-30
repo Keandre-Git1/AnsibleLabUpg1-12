@@ -1,1 +1,5 @@
-Lab7/vault-secretpasswd.txt
+.vault_pass
+vault-secretpasswd.txt
+*.log
+*.retry
+*_inventory_report.md

@@ -23,8 +23,6 @@ Handlers startar bara om tjänsterna när deras konfiguration ändras.
 
 Sista playen i `site.yml` skriver en rapport per nod, `<värdnamn>_inventory_report.md`, i repomappen med mallen `templates/gatherindex.html.j2`.
 
-Arkitekturmotiveringen finns i [ARCHITECTURE.md](ARCHITECTURE.md).
-
 ## Variabler
 
 | Variabel | Beskrivning |

@@ -2,4 +2,3 @@
 vault-secretpasswd.txt
 *.log
 *.retry
-*_inventory_report.md

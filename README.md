@@ -41,14 +41,14 @@ Varje labb körs från sin egen mapp. Labb 3–8 använder en statisk `inventory
 | Lab3 | `ansible-playbook -i inventory.ini sakerstallweb.yaml -K` |
 | Lab4 | `ansible-playbook -i ../Lab3/inventory.ini users.yml -K` |
 | Lab5 | `ansible-playbook -i inventory.ini site.yml -K` |
-| Lab6 | `ansible-playbook -i inventory.ini site.yml -K` |
+| Lab6 | Ingen egen playbook – mallen körs av webserver-rollen i Lab7 (se Lab7-raden) |
 | Lab7 | `ansible-playbook -i inventory.ini site.yml -K` |
 | Lab8 | `ansible-playbook -i inventory.ini site.yml -K` |
 | Lab9 | `ansible-inventory -i Scripts/script.py --list` och `ansible -i Scripts/script.py all -m ping` |
 | Lab10 | `ansible-playbook -i Scripts/script.py site.yml -K` |
 | Lab12 | `ansible-playbook -i Scripts/script.py site.yml -K` |
 
-Lab 7-10 läser vault-lösenordet från `~/vault-secretpasswd.txt` (se `ansible.cfg`).
+Lab 7, 8, 10 och 12 läser vault-lösenordet från `~/vault-secretpasswd.txt` (se `ansible.cfg` i respektive mapp).
 
 ## Köra slutprojektet
 

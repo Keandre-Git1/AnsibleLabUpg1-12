@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for flaskapp
+- name: Starta om Gunicorn
+  ansible.builtin.systemd:
+    name: gunicorn
+    state: restarted
+    daemon_reload: true
+
+- name: Ladda om Nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded

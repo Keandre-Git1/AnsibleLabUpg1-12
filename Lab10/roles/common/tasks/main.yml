@@ -11,4 +11,4 @@
          ansible.posix.authorized_key:
            user: devops_admin
            state: present
-           key: "{{ lookup('file', '/home/admin/.ssh/devops_admin.pub') }}"
+           key: "{{ lookup('file', '~/.ssh/devops_admin.pub') }}"

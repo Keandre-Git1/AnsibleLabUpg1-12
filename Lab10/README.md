@@ -21,17 +21,31 @@ Klient ──► :80 Nginx ──► :8000 Gunicorn ──► Flask ──► :3
 
 Handlers startar bara om tjänsterna när deras konfiguration ändras.
 
+Sista playen i `site.yml` skriver en rapport per nod, `<värdnamn>_inventory_report.md`, i repomappen med mallen `templates/gatherindex.html.j2`.
+
+Arkitekturmotiveringen finns i [ARCHITECTURE.md](ARCHITECTURE.md).
+
 ## Variabler
 
 | Variabel | Beskrivning |
 |---|---|
-| `db_host` | Databasnodens IP |
 | `vault_db_passwd` | Lösenord för `admintest` (Ansible Vault) |
 
 ## Körning
 
+Förberedelser på kontrollnoden (en gång):
+
 ```bash
-ansible-playbook -i Scripts/scripts.py site.yml -K
+ansible-galaxy collection install -r requirements.yml   # ansible.posix och ansible.mariadb
+chmod +x Scripts/script.py                              # inventoryt måste vara körbart
+```
+
+Vault-lösenordet ska ligga i `~/vault-secretpasswd.txt` (se `ansible.cfg`), alltså utanför repot.
+
+Kör hela projektet (`-K` frågar efter sudo-lösenordet):
+
+```bash
+ansible-playbook -i Scripts/script.py site.yml -K
 ```
 
 ## Verifiering

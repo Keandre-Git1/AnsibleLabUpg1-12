@@ -11,7 +11,7 @@
 
       - name: Skapa en jinja template + skicka over till noden
         ansible.builtin.template:
-          src: /home/admin/roles/webserver/templates/index.html.j2
+          src: index.html.j2
           dest: /var/www/html/index.html
         notify: starta om apache
 

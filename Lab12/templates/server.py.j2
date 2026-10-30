@@ -1,0 +1,32 @@
+import http.server
+import urllib.request
+import json
+
+# Hämtar IP-adressen till Nod 2 via Ansible
+API_HOST = "{{ hostvars['nodekea3@nodekea3.local']['ansible_default_ipv4']['address'] }}"
+
+class WebHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html; charset=utf-8")
+        self.end_headers()
+        
+        try:
+            # Anropa API-noden
+            url = f"http://{API_HOST}:5000"
+            req = urllib.request.urlopen(url, timeout=3)
+            data = json.loads(req.read().decode('utf-8'))
+            
+            html = f"""
+            <h1>G-Framgang! Nod 1 kontaktade API:et pa Nod 2!</h1>
+            <p><b>Svar fran API:</b> {data['message']}</p>
+            <p><b>Status:</b> {data['status']}</p>
+            """
+        except Exception as e:
+            html = f"<h1>Fel vid anslutning till API på {API_HOST}:</h1><p>{e}</p>"
+            
+        self.wfile.write(html.encode('utf-8'))
+
+# Starta webbservern på port 8080
+with http.server.HTTPServer(("", 8080), WebHandler) as httpd:
+    httpd.serve_forever()

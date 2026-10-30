@@ -1,0 +1,63 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for db
+      - name: sakerstall installation av mariadb
+        ansible.builtin.apt:
+          update_cache: true
+          name:
+          - mariadb-server
+          - mariadb-client
+          - galera-4
+
+
+      - name: Kontroll av att mariadb körs
+        ansible.builtin.service:
+          name: mariadb
+          state: started
+          enabled: true
+
+      - name: installera pythonmysql
+        ansible.builtin.apt:
+          name: python3-pymysql
+          state: present
+
+      - name: skapa db
+        ansible.mariadb.mariadb_db:
+          name: varandb
+          state: present
+          login_unix_socket: /var/run/mysqld/mysqld.sock
+
+      - name: skapa anvandare + tilldela rättigheter
+        ansible.mariadb.mariadb_user:
+          name: admintest
+          password: "{{ vault_db_passwd }}"
+          priv: "varandb.*:ALL"
+          host: "10.6.69.83"
+          login_unix_socket: /var/run/mysqld/mysqld.sock
+
+      - name: Tillåt anslutningar från alla IP-adresser
+        ansible.builtin.copy:
+          dest: /etc/mysql/mariadb.conf.d/99-override_bind.cnf
+          content: |
+            [mysqld]
+            bind-address = 0.0.0.0
+          mode: '0644'
+        notify: Starta om MariaDB          
+
+      - name: Skapa tabell
+        ansible.mariadb.mariadb_query:
+          login_db: varandb
+          login_unix_socket: /var/run/mysqld/mysqld.sock
+          query: |
+            CREATE TABLE IF NOT EXISTS produkter (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              namn VARCHAR(100) NOT NULL UNIQUE,
+              pris DECIMAL(8,2) NOT NULL
+            )
+
+      - name: Lägg in testdata
+        ansible.mariadb.mariadb_query:
+          login_db: varandb
+          login_unix_socket: /var/run/mysqld/mysqld.sock
+          query: "INSERT IGNORE INTO produkter (namn, pris) VALUES (%s, %s)"
+          positional_args: ["Kaffe", 29.50]

@@ -38,5 +38,5 @@
       - name: Samla in data från noder
         ansible.builtin.template:
           src: templates/gatherindex.html.j2
-          dest: "/home/admin/{{ ansible_facts['hostname'] }}_inventory_report.md"
+          dest: "{{ playbook_dir }}/{{ ansible_facts['hostname'] }}_inventory_report.md"
         delegate_to: localhost

@@ -1,0 +1,14 @@
+# Vault-lösenord och privata nycklar ska aldrig in i Git
+.vault_pass
+vault-secretpasswd.txt
+*.pem
+id_rsa
+id_ed25519
+devops_admin
+
+# Loggar och tillfälliga filer
+*.log
+*.retry
+
+# Rapporterna som site.yml skriver
+*_inventory_report.md

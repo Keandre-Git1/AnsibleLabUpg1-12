@@ -1,0 +1,14 @@
+       - name: skapa systemanvandare
+         ansible.builtin.user:
+           name: devops_admin
+           state: present
+           create_home: true
+           groups: sudo
+           append: true
+           system: true
+
+       - name: Konfigurera användaren med ett eget SSH-nyckelpark och distrubuerad public key
+         ansible.posix.authorized_key:
+           user: devops_admin
+           state: present
+           key: "{{ lookup('file', '~/.ssh/devops_admin.pub') }}"

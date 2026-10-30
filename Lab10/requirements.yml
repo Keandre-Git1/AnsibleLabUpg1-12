@@ -1,0 +1,6 @@
+---
+# Collections som rollerna använder:
+#   ansible-galaxy collection install -r requirements.yml
+collections:
+  - name: ansible.posix
+  - name: ansible.mariadb

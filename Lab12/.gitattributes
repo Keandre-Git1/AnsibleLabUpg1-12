@@ -1,0 +1,2 @@
+# Inventory-skriptet måste ha Linux-radslut för att kunna köras
+*.py text eol=lf

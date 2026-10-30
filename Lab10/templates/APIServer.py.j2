@@ -1,0 +1,20 @@
+import http.server
+import json
+
+class APIHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.end_headers()
+        
+        # Returnera lite enkel data
+        response = {
+            "status": "online",
+            "message": "Hej fran API-noden (Nod 3)!",
+            "node": "{{ inventory_hostname }}"
+        }
+        self.wfile.write(json.dumps(response).encode('utf-8'))
+
+# Starta API på port 5000
+with http.server.HTTPServer(("", 5000), APIHandler) as httpd:
+    httpd.serve_forever()

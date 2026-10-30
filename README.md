@@ -48,7 +48,6 @@ Varje labb körs från sin egen mapp. Labb 3–8 använder en statisk `inventory
 | Lab10 | `ansible-playbook -i Scripts/script.py site.yml -K` |
 | Lab12 | `ansible-playbook -i Scripts/script.py site.yml -K` |
 
-Lab 6 har ingen egen playbook. Mallen `index.html.j2` används av webserver-rollen från Lab 7.
 Lab 7-10 läser vault-lösenordet från `~/vault-secretpasswd.txt` (se `ansible.cfg`).
 
 ## Köra slutprojektet
